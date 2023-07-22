@@ -1,0 +1,9 @@
+#! /bin/sh
+
+sl
+echo "Downloading youtube videos..."
+
+# download links from youtube.txt
+./yt-dlp.exe -a youtube.txt --path "/Output"
+
+echo "Done."
