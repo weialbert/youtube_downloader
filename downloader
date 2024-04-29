@@ -1,9 +1,24 @@
 #! /bin/sh
 
-sl
+# determine OS
+unameOut="$(uname -s)"
+case "${unameOut}" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    MSYS_NT*)   machine=Git;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
+
+echo ${machine}
 echo "Downloading youtube videos..."
 
 # download links from youtube.txt
-./yt-dlp.exe -a youtube.txt --path "/Output"
+if [ "$machine" = "Mac" ]; then
+	./yt-dlp_macos -a youtube.txt --write-sub --sub-lang en --path "Output"
+else
+	./yt-dlp.exe -a youtube.txt --path "/Output"
+fi
 
 echo "Done."
